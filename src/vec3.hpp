@@ -40,7 +40,7 @@ struct Vec3 {
     }
 
     constexpr Vec3 operator-(const Vec3& other) const {
-        return Vec3{x - other.x, y - other.y, z - other.z};
+        return {x - other.x, y - other.y, z - other.z};
     }
 
     Vec3& operator-=(const Vec3& other) {
@@ -51,11 +51,11 @@ struct Vec3 {
     }
 
     constexpr Vec3 operator*(float f) const {
-        return Vec3{x * f, y * f, z * f};
+        return {x * f, y * f, z * f};
     }
 
     constexpr friend Vec3 operator*(float f, const Vec3 v) {
-        return Vec3{v.x * f, v.y * f, v.z * f};
+        return {v.x * f, v.y * f, v.z * f};
     }
 
     Vec3& operator*=(float f) {
@@ -66,7 +66,7 @@ struct Vec3 {
     }
 
     constexpr Vec3 operator/(float f) {
-        return Vec3{x / f, y / f, z / f};
+        return {x / f, y / f, z / f};
     }
 
     Vec3& operator/=(float f) {
@@ -77,7 +77,7 @@ struct Vec3 {
     }
 
     constexpr Vec3 operator*(const Vec3& other) const {
-        return Vec3{x * other.x, y * other.y, z * other.z};
+        return {x * other.x, y * other.y, z * other.z};
     }
 
     Vec3& operator*=(const Vec3& other) {
@@ -110,9 +110,9 @@ struct Vec3 {
     }
 
     constexpr Vec3 cross(const Vec3& other) const {
-        return Vec3{y * other.z - z * other.y, 
-                    z * other.x - x * other.z,
-                    x * other.y - y * other.x};
+        return {y * other.z - z * other.y, 
+                z * other.x - x * other.z,
+                x * other.y - y * other.x};
     }
 
     constexpr Vec3 normalised() const { 
@@ -124,16 +124,16 @@ struct Vec3 {
 
 };
 
-const Vec3 Vec3::zero    = Vec3{ 0,  0,  0};
-const Vec3 Vec3::xAxis   = Vec3{ 1,  0,  0};
-const Vec3 Vec3::yAxis   = Vec3{ 0,  1,  0};
-const Vec3 Vec3::zAxis   = Vec3{ 0,  0,  1};
-const Vec3 Vec3::up      = Vec3{ 0,  1,  0};
-const Vec3 Vec3::down    = Vec3{ 0, -1,  0};
-const Vec3 Vec3::left    = Vec3{-1,  0,  0};
-const Vec3 Vec3::right   = Vec3{ 1,  0,  0};
-const Vec3 Vec3::forward = Vec3{ 0,  0,  1};
-const Vec3 Vec3::back    = Vec3{ 0,  0, -1};
+const Vec3 Vec3::zero    = {0,  0,  0};
+const Vec3 Vec3::xAxis   = {1,  0,  0};
+const Vec3 Vec3::yAxis   = {0,  1,  0};
+const Vec3 Vec3::zAxis   = {0,  0,  1};
+const Vec3 Vec3::up      = {0,  1,  0};
+const Vec3 Vec3::down    = {0, -1,  0};
+const Vec3 Vec3::left    = {1,  0,  0};
+const Vec3 Vec3::right   = {1,  0,  0};
+const Vec3 Vec3::forward = {0,  0,  1};
+const Vec3 Vec3::back    = {0,  0, -1};
 
 std::ostream& operator<<(std::ostream& os, const Vec3& v) {
     return os << '(' << v.x << ", " << v.y << ", " << v.z << ')';

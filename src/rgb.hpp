@@ -10,7 +10,7 @@ struct RGB {
     constexpr RGB operator-() const { return RGB(-r, -g, -b); }
 
     constexpr RGB operator+(const RGB& other) const {
-        return RGB{r + other.r, g + other.g, b + other.b};
+        return {r + other.r, g + other.g, b + other.b};
     }
 
     RGB& operator+=(const RGB& other) {
@@ -21,7 +21,7 @@ struct RGB {
     }
 
     constexpr RGB operator-(const RGB& other) const {
-        return RGB{r - other.r, g - other.g, b - other.b};
+        return {r - other.r, g - other.g, b - other.b};
     }
 
     RGB& operator-=(const RGB& other) {
@@ -32,11 +32,11 @@ struct RGB {
     }
 
     constexpr RGB operator*(float f) const {
-        return RGB{r * f, g * f, b * f};
+        return {r * f, g * f, b * f};
     }
 
     constexpr friend RGB operator*(float f, const RGB v) {
-        return RGB{v.r * f, v.g * f, v.b * f};
+        return {v.r * f, v.g * f, v.b * f};
     }
 
     RGB& operator*=(float f) {
