@@ -3,7 +3,7 @@
 struct RGB {
     int r, g, b;
 
-    // RGB() = default;
+    // constexpr RGB() = default;
     // constexpr RGB(float r, float g, float b) : r(r), g(g), b(b) {};
 
     constexpr RGB operator+() const { return *this; }
