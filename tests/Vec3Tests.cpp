@@ -95,6 +95,10 @@ TEST_CASE("Vectors", "[math]") {
         CHECK(Vec3().dot(Vec3(1, 2, 3)) == 0);
         CHECK(Vec3(1, 2, 3).dot(Vec3()) == 0);
         CHECK(Vec3(1, 2, 3).dot(Vec3(1, 2, 3)) == 14);
+
+        CHECK(Vec3(1, 2, 3).dot(Vec3::xAxis) == 1);
+        CHECK(Vec3(1, 2, 3).dot(Vec3::yAxis) == 2);
+        CHECK(Vec3(1, 2, 3).dot(Vec3::zAxis) == 3);
     }
 
     SECTION("cross product") {
@@ -103,6 +107,8 @@ TEST_CASE("Vectors", "[math]") {
         CHECK(Vec3(1, 2, 3).cross(Vec3()) == Vec3());
         CHECK(Vec3(1, 2, 3).cross(Vec3(1, 2, 3)) == Vec3());
         CHECK(Vec3(1, 2, 3).cross(Vec3(3, 2, 1)) == Vec3(-4, 8, -4));
+        CHECK(Vec3::xAxis.cross(Vec3::yAxis) == Vec3::forward);
+        CHECK(Vec3::yAxis.cross(Vec3::xAxis) == Vec3::back);
     }
 
     SECTION("magnitude") {
