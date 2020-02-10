@@ -18,7 +18,7 @@ struct Vec3 {
     static const Vec3 back;
 
     float x, y, z;
-    
+     
     // constexpr Vec3() = default;
     // constexpr Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
 
@@ -26,10 +26,10 @@ struct Vec3 {
     constexpr const float& operator[](int i) const { return (&x)[i]; }
 
     constexpr Vec3 operator+() const { return *this; }
-    constexpr Vec3 operator-() const { return Vec3{-x, -y, -z}; }
+    constexpr Vec3 operator-() const { return {-x, -y, -z}; }
 
     constexpr Vec3 operator+(const Vec3& other) const {
-        return Vec3{x + other.x, y + other.y, z + other.z};
+        return {x + other.x, y + other.y, z + other.z};
     }
 
     Vec3& operator+=(const Vec3& other) {
