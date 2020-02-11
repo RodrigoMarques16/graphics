@@ -1,7 +1,7 @@
 #pragma once
 
 struct RGB {
-    int r, g, b;
+    float r, g, b;
 
     // constexpr RGB() = default;
     // constexpr RGB(float r, float g, float b) : r(r), g(g), b(b) {};
