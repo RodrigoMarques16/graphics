@@ -1,6 +1,7 @@
 #include "vec3.hpp"
 
 #include <ostream>
+#include <unit3.hpp>
 
 constexpr const Vec3 Vec3::zero    = {0,  0,  0};
 constexpr const Vec3 Vec3::xAxis   = {1,  0,  0};
@@ -12,6 +13,8 @@ constexpr const Vec3 Vec3::left    = {1,  0,  0};
 constexpr const Vec3 Vec3::right   = {1,  0,  0};
 constexpr const Vec3 Vec3::forward = {0,  0,  1};
 constexpr const Vec3 Vec3::back    = {0,  0, -1};
+
+constexpr Vec3::Vec3(const Unit3& u) : x(u.x), y(u.y), z(u.z) {}
 
 constexpr float& Vec3::operator[](int i) { return (&x)[i]; }
 
@@ -104,11 +107,11 @@ constexpr Vec3 Vec3::cross(const Vec3& other) const {
             x * other.y - y * other.x};
 }
 
-Vec3 Vec3::unitVector() const { 
+Unit3 Vec3::unitVector() const { 
     float length = this->length();
     if (length > eps)
-        return (*this) * (1 / this->length());
-    else return zero;
+        return Unit3::fromVec3((*this) * (1 / this->length()));
+    else return {0,0,0};
 }
 
 std::ostream& operator<<(std::ostream& os, const Vec3& v) {
