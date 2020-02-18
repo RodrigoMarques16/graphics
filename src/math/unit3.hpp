@@ -34,12 +34,12 @@ struct Unit3 {
         return x * other.x + y * other.y + z * other.z;
     }
 
-    static Unit3 fromVec3(const Vec3& v);
+    static Unit3 fromVec3(const Vec3&);
     constexpr Vec3 toVec3() const;
-    constexpr Vec3 operator*(float k) const;
-    constexpr float dot(const Vec3& other) const;
-    constexpr Vec3 cross(const Vec3& other) const;
-    constexpr Vec3 cross(const Unit3& other) const;
+    constexpr Vec3 operator*(float) const;
+    constexpr float dot(const Vec3&) const;
+    constexpr Vec3 cross(const Vec3&) const;
+    constexpr Vec3 cross(const Unit3&) const;
 };
 
 constexpr const Unit3 Unit3::zero    = {0,  0,  0};
@@ -54,10 +54,6 @@ constexpr const Unit3 Unit3::forward = {0,  0,  1};
 constexpr const Unit3 Unit3::back    = {0,  0, -1};
 
 #include "vec3.hpp"
-
-Unit3 Unit3::fromVec3(const Vec3& v) {
-    return {v.x, v.y, v.z};
-}
 
 constexpr Vec3 Unit3::toVec3() const {
     return {x, y, z};
