@@ -93,7 +93,7 @@ struct Vec3 {
     };
 
     constexpr float lengthSquared() const { return x * x + y * y + z * z; }
-    float length() const { return sqrt(lengthSquared()); }
+    float length() const { return sqrtf(lengthSquared()); }
 
     constexpr float dot(const Vec3& other) const {
         return x * other.x + y * other.y + z * other.z;
@@ -104,6 +104,8 @@ struct Vec3 {
                 z * other.x - x * other.z,
                 x * other.y - y * other.x};
     }
+
+    constexpr Vec3 cross(const Unit3& other) const;
 
     Unit3 unitVector() const;
 };
@@ -120,6 +122,12 @@ constexpr const Vec3 Vec3::forward = {0,  0,  1};
 constexpr const Vec3 Vec3::back    = {0,  0, -1};
 
 #include "unit3.hpp"
+
+constexpr Vec3 Vec3::cross(const Unit3& other) const {
+    return {y * other.z - z * other.y, 
+            z * other.x - x * other.z,
+            x * other.y - y * other.x};
+}
 
 inline Unit3 Vec3::unitVector() const {
     float length = this->length();
