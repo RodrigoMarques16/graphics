@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iosfwd>
+
 struct RGB {
     float r, g, b;
 
@@ -61,4 +63,8 @@ struct RGB {
         b *= other.b;
         return *this;
     }
+
+    void clamp();
 };
+
+std::ostream& operator<<(std::ostream&, const RGB&);
