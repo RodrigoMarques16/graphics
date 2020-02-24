@@ -92,8 +92,13 @@ struct Vec3 {
         return x != other.x || y != other.y || z != other.z;
     };
 
-    constexpr float lengthSquared() const { return x * x + y * y + z * z; }
-    float length() const { return sqrtf(lengthSquared()); }
+    constexpr float lengthSquared() const { 
+        return x * x + y * y + z * z; 
+    }
+    
+    float length() const { 
+        return sqrtf(lengthSquared()); 
+    }
 
     constexpr float dot(const Vec3& other) const {
         return x * other.x + y * other.y + z * other.z;

@@ -2,62 +2,62 @@
 
 #include <iosfwd>
 
-struct RGB {
+struct rgb {
     float r, g, b;
 
-    constexpr RGB operator-() const { return {-r, -g, -b}; }
+    constexpr rgb operator-() const { return {-r, -g, -b}; }
 
-    constexpr RGB operator+(const RGB& other) const {
+    constexpr rgb operator+(const rgb& other) const {
         return {r + other.r, g + other.g, b + other.b};
     }
 
-    RGB& operator+=(const RGB& other) {
+    rgb& operator+=(const rgb& other) {
         r += other.r;
         g += other.g;
         b += other.b;
         return *this;
     }
 
-    constexpr RGB operator-(const RGB& other) const {
+    constexpr rgb operator-(const rgb& other) const {
         return {r - other.r, g - other.g, b - other.b};
     }
 
-    RGB& operator-=(const RGB& other) {
+    rgb& operator-=(const rgb& other) {
         r -= other.r;
         g -= other.g;
         b -= other.b;
         return *this;
     }
 
-    constexpr RGB operator*(float f) const {
+    constexpr rgb operator*(float f) const {
         return {r * f, g * f, b * f};
     }
 
-    constexpr friend RGB operator*(float f, const RGB v) {
+    constexpr friend rgb operator*(float f, const rgb v) {
         return {v.r * f, v.g * f, v.b * f};
     }
 
-    RGB& operator*=(float f) {
+    rgb& operator*=(float f) {
         r *= f;
         g *= f;
         b *= f;
         return *this;
     }
 
-    constexpr RGB operator/(float f) { return {r / f, g / f, b / f}; }
+    constexpr rgb operator/(float f) { return {r / f, g / f, b / f}; }
 
-    RGB& operator/=(float f) {
+    rgb& operator/=(float f) {
         r /= f;
         g /= f;
         b /= f;
         return *this;
     }
 
-    constexpr RGB operator*(const RGB& other) const {
+    constexpr rgb operator*(const rgb& other) const {
         return {r * other.r, g * other.g, b * other.b};
     }
 
-    RGB& operator*=(const RGB& other) {
+    rgb& operator*=(const rgb& other) {
         r *= other.r;
         g *= other.g;
         b *= other.b;
@@ -67,4 +67,4 @@ struct RGB {
     void clamp();
 };
 
-std::ostream& operator<<(std::ostream&, const RGB&);
+std::ostream& operator<<(std::ostream&, const rgb&);

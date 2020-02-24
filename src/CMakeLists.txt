@@ -1,5 +1,15 @@
+include_directories(image)
+include_directories(math)
+include_directories(shapes)
+
 add_subdirectory(math)
+add_subdirectory(shapes)
+add_subdirectory(image)
 
 add_executable(graphics main.cpp)
 target_include_directories(graphics PUBLIC math)
+target_include_directories(graphics PUBLIC image)
+target_include_directories(graphics PUBLIC shapes)
 target_link_libraries(graphics PUBLIC math)
+target_link_libraries(graphics PUBLIC shapes)
+target_link_libraries(graphics PUBLIC image)
