@@ -50,5 +50,7 @@ struct Sphere {
                 return false;
             return true;
         }
+
+        return false;
     }
 };
