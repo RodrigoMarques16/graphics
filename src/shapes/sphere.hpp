@@ -8,49 +8,50 @@
 
 struct Sphere {
     Vec3 center;
-    float radius;
-    rgb color;
+    float radiusSquared;
 
-    constexpr std::optional<HitRecord> hit(const Ray& r, float tmin, float tmax) {
-        Vec3 temp = r.origin - center;
-        auto a = r.direction.dot(r.direction);
-        auto b = 2 * r.direction.dot(temp);
-        auto c = temp.dot(temp) - radius * radius;
+    constexpr Sphere(const Vec3& c, float r) : center(c), radiusSquared(r) {}
 
-        auto discriminant = b * b - 4 * a * c;
+    // constexpr std::optional<HitRecord> hit(const Ray& r, float tmin, float tmax) {
+    //     Vec3 temp = r.origin - center;
+    //     auto a = r.direction.dot(r.direction);
+    //     auto b = 2 * r.direction.dot(temp);
+    //     auto c = temp.dot(temp) - radius * radius;
 
-        if (discriminant > 0) {
-            discriminant = sqrt(discriminant);
-            auto t = (-b - discriminant) / (2 * a);
-            if (t < tmin)
-                t = (-b + discriminant) / (2 * a);
-            if (t < tmin || t > tmax)
-                return std::nullopt;
-            auto norm = (r.origin + t * r.direction - center).unitVector();
-            return std::make_optional<HitRecord>({t, norm, color});
-        }
+    //     auto discriminant = b * b - 4 * a * c;
 
-        return std::nullopt;
-    }
+    //     if (discriminant > 0) {
+    //         discriminant = sqrt(discriminant);
+    //         auto t = (-b - discriminant) / (2 * a);
+    //         if (t < tmin)
+    //             t = (-b + discriminant) / (2 * a);
+    //         if (t < tmin || t > tmax)
+    //             return std::nullopt;
+    //         auto norm = (r.origin + t * r.direction - center).unitVector();
+    //         return std::make_optional<HitRecord>({t, /*norm,*/ color});
+    //     }
 
-    constexpr bool shadowHit(const Ray& r, float tmin, float tmax) {
-        Vec3 temp = r.origin - center;
-        auto a = r.direction.dot(r.direction);
-        auto b = 2 * r.direction.dot(temp);
-        auto c = temp.dot(temp) - radius * radius;
+    //     return std::nullopt;
+    // }
 
-        auto discriminant = b * b - 4 * a * c;
+    // constexpr bool shadowHit(const Ray& r, float tmin, float tmax) {
+    //     Vec3 temp = r.origin - center;
+    //     auto a = r.direction.dot(r.direction);
+    //     auto b = 2 * r.direction.dot(temp);
+    //     auto c = temp.dot(temp) - radius * radius;
 
-        if (discriminant > 0) {
-            discriminant = sqrt(discriminant);
-            auto t = (-b - discriminant) / (2 * a);
-            if (t < tmin)
-                t = (-b + discriminant) / (2 * a);
-            if (t < tmin || t > tmax)
-                return false;
-            return true;
-        }
+    //     auto discriminant = b * b - 4 * a * c;
 
-        return false;
-    }
+    //     if (discriminant > 0) {
+    //         discriminant = sqrt(discriminant);
+    //         auto t = (-b - discriminant) / (2 * a);
+    //         if (t < tmin)
+    //             t = (-b + discriminant) / (2 * a);
+    //         if (t < tmin || t > tmax)
+    //             return false;
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
 };

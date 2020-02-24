@@ -5,6 +5,6 @@
 
 struct HitRecord {
     float dist;
-    Unit3 normal;
+    // Unit3 normal;
     rgb color;
 };
