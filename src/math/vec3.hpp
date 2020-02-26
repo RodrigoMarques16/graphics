@@ -6,9 +6,9 @@
 struct Unit3;
 
 struct Vec3 {
-    static constexpr const float eps = 0.00000001;
+    static constexpr const double eps = 0.000001;
 
-    float x, y, z;
+    double x, y, z;
     
     static const Vec3 zero;
     static const Vec3 xAxis;
@@ -22,8 +22,8 @@ struct Vec3 {
     static const Vec3 back;
 
 
-    constexpr float& operator[](int i) { return (&x)[i]; }
-    constexpr const float& operator[](int i) const { return (&x)[i]; }
+    constexpr double& operator[](int i) { return (&x)[i]; }
+    constexpr const double& operator[](int i) const { return (&x)[i]; }
 
     constexpr Vec3 operator-() const { return {-x, -y, -z}; }
 
@@ -49,22 +49,22 @@ struct Vec3 {
         return *this;
     }
 
-    constexpr Vec3 operator*(float f) const { return {x * f, y * f, z * f}; }
+    constexpr Vec3 operator*(double f) const { return {x * f, y * f, z * f}; }
 
-    constexpr friend Vec3 operator*(float f, const Vec3 v) {
+    constexpr friend Vec3 operator*(double f, const Vec3 v) {
         return {v.x * f, v.y * f, v.z * f};
     }
 
-    Vec3& operator*=(float f) {
+    Vec3& operator*=(double f) {
         x *= f;
         y *= f;
         z *= f;
         return *this;
     }
 
-    constexpr Vec3 operator/(float f) const { return {x / f, y / f, z / f}; }
+    constexpr Vec3 operator/(double f) const { return {x / f, y / f, z / f}; }
 
-    Vec3& operator/=(float f) {
+    Vec3& operator/=(double f) {
         x /= f;
         y /= f;
         z /= f;
@@ -92,15 +92,15 @@ struct Vec3 {
         return x != other.x || y != other.y || z != other.z;
     };
 
-    constexpr float lengthSquared() const { 
+    constexpr double lengthSquared() const { 
         return x * x + y * y + z * z; 
     }
     
-    float length() const { 
+    double length() const { 
         return sqrtf(lengthSquared()); 
     }
 
-    constexpr float dot(const Vec3& other) const {
+    constexpr double dot(const Vec3& other) const {
         return x * other.x + y * other.y + z * other.z;
     }
 
@@ -135,7 +135,7 @@ constexpr Vec3 Vec3::cross(const Unit3& other) const {
 }
 
 inline Unit3 Vec3::unitVector() const {
-    float length = this->length();
+    double length = this->length();
     if (length > eps)
         return Unit3::fromVec3((*this) * (1 / this->length()));
     else return Unit3::zero;

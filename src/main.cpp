@@ -24,8 +24,8 @@ int main() {
     scene.addTriangle({500,   0, -1000}, {250, 250, -1000}, {500, 500, -1000}); // right
     scene.addTriangle({500,   0, -1000}, {250, 250, -1000}, {0,     0, -1000}); // bottom
 
-    for (float i = 0; i < 500; i++) {
-        for (float j = 0; j < 500; j++) {
+    for (double i = 0; i < 500; i++) {
+        for (double j = 0; j < 500; j++) {
             auto r = Ray{{i, j, 0}, Vec3::back};
             auto hit = scene.intersect(r);  
             if (hit.has_value()) 

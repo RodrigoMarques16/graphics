@@ -5,7 +5,9 @@
 struct Vec3;
 
 struct Unit3 {
-    float x, y, z;
+    static constexpr const double eps = 0.000001;
+
+    double x, y, z;
 
     static const Unit3 zero;
     static const Unit3 xAxis;
@@ -30,14 +32,14 @@ struct Unit3 {
         return {-x, -y, -z};
     }
     
-    constexpr float dot(const Unit3& other) const {
+    constexpr double dot(const Unit3& other) const {
         return x * other.x + y * other.y + z * other.z;
     }
 
     static Unit3 fromVec3(const Vec3&);
     constexpr Vec3 toVec3() const;
-    constexpr Vec3 operator*(float) const;
-    constexpr float dot(const Vec3&) const;
+    constexpr Vec3 operator*(double) const;
+    constexpr double dot(const Vec3&) const;
     constexpr Vec3 cross(const Vec3&) const;
     constexpr Vec3 cross(const Unit3&) const;
 };
@@ -59,11 +61,11 @@ constexpr Vec3 Unit3::toVec3() const {
     return {x, y, z};
 }
 
-constexpr Vec3 Unit3::operator*(float k) const {
+constexpr Vec3 Unit3::operator*(double k) const {
     return {x * k, y* k, z* k};
 };
 
-constexpr float Unit3::dot(const Vec3& other) const {
+constexpr double Unit3::dot(const Vec3& other) const {
     return x * other.x + y * other.y + z * other.z;
 }
 

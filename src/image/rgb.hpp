@@ -3,7 +3,7 @@
 #include <iosfwd>
 
 struct rgb {
-    float r, g, b;
+    double r, g, b;
 
     constexpr rgb operator-() const { return {-r, -g, -b}; }
 
@@ -29,24 +29,24 @@ struct rgb {
         return *this;
     }
 
-    constexpr rgb operator*(float f) const {
+    constexpr rgb operator*(double f) const {
         return {r * f, g * f, b * f};
     }
 
-    constexpr friend rgb operator*(float f, const rgb v) {
+    constexpr friend rgb operator*(double f, const rgb v) {
         return {v.r * f, v.g * f, v.b * f};
     }
 
-    rgb& operator*=(float f) {
+    rgb& operator*=(double f) {
         r *= f;
         g *= f;
         b *= f;
         return *this;
     }
 
-    constexpr rgb operator/(float f) { return {r / f, g / f, b / f}; }
+    constexpr rgb operator/(double f) { return {r / f, g / f, b / f}; }
 
-    rgb& operator/=(float f) {
+    rgb& operator/=(double f) {
         r /= f;
         g /= f;
         b /= f;

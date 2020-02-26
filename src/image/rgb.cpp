@@ -3,9 +3,9 @@
 #include <iostream>
 
 void rgb::clamp() {
-    r = std::clamp(r, 0.0f, 1.0f);
-    g = std::clamp(g, 0.0f, 1.0f);
-    b = std::clamp(b, 0.0f, 1.0f);
+    r = std::clamp(r, 0.0, 1.0);
+    g = std::clamp(g, 0.0, 1.0);
+    b = std::clamp(b, 0.0, 1.0);
 }
 
 std::ostream& operator<<(std::ostream& os, const rgb& c) {

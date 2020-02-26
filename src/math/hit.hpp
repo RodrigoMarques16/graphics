@@ -4,7 +4,7 @@
 #include "rgb.hpp"
 
 struct HitRecord {
-    float dist;
+    double dist;
     // Unit3 normal;
     rgb color;
 };

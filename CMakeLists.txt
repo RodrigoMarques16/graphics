@@ -4,6 +4,6 @@ project(graphics VERSION 0.1.0
                  LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 enable_testing()
-add_compile_options(-Wall -Wextra -march=native -g)
+add_compile_options(-Wall -Wextra -march=native -O3)
 include_directories(include)
 add_subdirectory(src)

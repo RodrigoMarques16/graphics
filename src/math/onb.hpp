@@ -4,7 +4,7 @@
 #include "unit3.hpp"
 
 struct ONB {
-    static constexpr const float eps = 0.01f;
+    static constexpr const double eps = 0.000001;
 
     Unit3 u, v, w;
 

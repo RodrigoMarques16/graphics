@@ -33,9 +33,9 @@ struct Image {
         return raster[x * width + y];
     }
 
-    void gammaCorrect(float gamma) {
+    void gammaCorrect(double gamma) {
         rgb temp;
-        float power = 1.0f / gamma;
+        double power = 1.0 / gamma;
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 temp = get(i, j);

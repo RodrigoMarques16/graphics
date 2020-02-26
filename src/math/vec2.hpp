@@ -6,9 +6,9 @@
 struct Unit3;
 
 struct Vec2 {
-    static constexpr const float eps = 0.00000001;
+    static constexpr const double eps = 0.000001;
 
-    float x, y;
+    double x, y;
     
     static const Vec2 zero;
     static const Vec2 xAxis;
@@ -18,8 +18,8 @@ struct Vec2 {
     static const Vec2 left;
     static const Vec2 right;
 
-    constexpr float& operator[](int i) { return (&x)[i]; }
-    constexpr const float& operator[](int i) const { return (&x)[i]; }
+    constexpr double& operator[](int i) { return (&x)[i]; }
+    constexpr const double& operator[](int i) const { return (&x)[i]; }
 
     constexpr Vec2 operator-() const { return {-x, -y}; }
 
@@ -43,21 +43,21 @@ struct Vec2 {
         return *this;
     }
 
-    constexpr Vec2 operator*(float f) const { return {x * f, y * f}; }
+    constexpr Vec2 operator*(double f) const { return {x * f, y * f}; }
 
-    constexpr friend Vec2 operator*(float f, const Vec2 v) {
+    constexpr friend Vec2 operator*(double f, const Vec2 v) {
         return {v.x * f, v.y * f};
     }
 
-    Vec2& operator*=(float f) {
+    Vec2& operator*=(double f) {
         x *= f;
         y *= f;
         return *this;
     }
 
-    constexpr Vec2 operator/(float f) const { return {x / f, y / f}; }
+    constexpr Vec2 operator/(double f) const { return {x / f, y / f}; }
 
-    Vec2& operator/=(float f) {
+    Vec2& operator/=(double f) {
         x /= f;
         y /= f;
         return *this;
@@ -83,15 +83,15 @@ struct Vec2 {
         return x != other.x || y != other.y;
     };
 
-    constexpr float lengthSquared() const { 
+    constexpr double lengthSquared() const { 
         return x * x + y * y; 
     }
     
-    float length() const { 
+    double length() const { 
         return sqrtf(lengthSquared()); 
     }
 
-    constexpr float dot(const Vec2& other) const {
+    constexpr double dot(const Vec2& other) const {
         return x * other.x + y * other.y;
     }
 };

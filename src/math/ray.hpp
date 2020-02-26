@@ -6,7 +6,7 @@
 struct Ray {
     Vec3 origin, direction;
 
-    constexpr Vec3 at(float t) const {
+    constexpr Vec3 at(double t) const {
         return origin + t * direction;
     }
 
