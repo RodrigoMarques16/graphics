@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdio.h>
 
+
 int main() {
 
     Image img(500, 500, {.2, .2, .2});
@@ -28,12 +29,15 @@ int main() {
 
     for (double i = 0; i < 500; i++) {
         for (double j = 0; j < 500; j++) {
-            auto r = Ray{{i, j, 0}, Vec3::back};
-            auto hit = scene.intersect(r);  
-            if (hit.has_value()) 
-                img.set(i,j, hit->color);
+            auto r = Ray{{i, j, 0}, Vec3::back}; // todo: generate ray based on camera
+            auto hit = scene.intersect(r);       // customization point   
+            if (hit.has_value())                 
+                img.set(i,j, hit->color);        // todo: add hit shader
+                                                 // todo: add miss shader
         }
     }
+
+
     
     img.writePPM(std::cout);
 }

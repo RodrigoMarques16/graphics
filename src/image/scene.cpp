@@ -39,6 +39,7 @@ std::optional<std::pair<double, double>> solveQuadratic(double a, double b, doub
     return std::make_pair(t0, t1);
 }
 
+// real-time rendering 4th edition
 std::optional<HitRecord> Scene::intersectSpheres(const Ray& r, double nearest_dist) {
     int nearest_index = -1;
 
@@ -96,6 +97,8 @@ std::optional<HitRecord> Scene::intersectSpheres(const Ray& r, double nearest_di
     return HitRecord{nearest_dist, /*norm,*/ {.2,.2,.8}};
 }
 
+
+// https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
 std::optional<HitRecord> Scene::intersectTriangles(const Ray& r, double nearest_dist) {
     int nearest_index = -1;
     double nearest_u, nearest_v;
