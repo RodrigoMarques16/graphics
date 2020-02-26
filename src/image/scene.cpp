@@ -43,27 +43,49 @@ std::optional<HitRecord> Scene::intersectSpheres(const Ray& r, double nearest_di
     int nearest_index = -1;
 
     for (size_t i = 0; i < spheres.size(); ++i) {
-        auto temp = r.origin - spheres[i].center;
-        auto a = r.direction.lengthSquared();
-        auto b = 2 * r.direction.dot(temp);
-        auto c = temp.lengthSquared() - spheres[i].radiusSquared;
+        auto l = spheres[i].center - r.origin;
+        auto s = l.dot(r.direction);
 
-        auto sol = solveQuadratic(a, b, c);
-        
-        if (!sol.has_value()) continue;
+        auto lsquared = l.dot(l);
+        if (s < 0 && lsquared > spheres[i].radiusSquared)
+            continue;
 
-        auto [t0, t1] = sol.value();
+        auto msquared = lsquared - s * s;
+        if (msquared > spheres[i].radiusSquared)
+            continue;
 
-        if (t0 > t1) std::swap(t0,t1);
+        auto q = sqrt(spheres[i].radiusSquared - msquared);
+        float t;
+        if (lsquared > spheres[i].radiusSquared)
+            t = s - q;
+        else t = s +q;
 
-        if (t0 < 0) {
-            t0 = t1;
-            if (t0 < 0) continue;
-        }
-        if (t0 < nearest_dist) {
+        if (t < nearest_dist) {
             nearest_index = i;
-            nearest_dist = t0;
+            nearest_dist = t;
         }
+
+        // auto temp = r.origin - spheres[i].center;
+        // auto a = r.direction.lengthSquared();
+        // auto b = 2 * r.direction.dot(temp);
+        // auto c = temp.lengthSquared() - spheres[i].radiusSquared;
+
+        // auto sol = solveQuadratic(a, b, c);
+        
+        // if (!sol.has_value()) continue;
+
+        // auto [t0, t1] = sol.value();
+
+        // if (t0 > t1) std::swap(t0,t1);
+
+        // if (t0 < 0) {
+        //     t0 = t1;
+        //     if (t0 < 0) continue;
+        // }
+        // if (t0 < nearest_dist) {
+        //     nearest_index = i;
+        //     nearest_dist = t0;
+        // }
     }
 
     if (nearest_index == -1) return std::nullopt;
