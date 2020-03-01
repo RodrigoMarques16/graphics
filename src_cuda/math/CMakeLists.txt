@@ -1,5 +1,0 @@
-add_library(math ray.cuh vec3.cuh rgb.cuh)
-target_compile_features(math PUBLIC cxx_std_14)
-# set_target_properties(math PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-set_target_properties(math PROPERTIES LINKER_LANGUAGE CUDA)
-target_include_directories(math PUBLIC ..)

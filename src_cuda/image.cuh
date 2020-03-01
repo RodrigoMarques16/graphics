@@ -27,7 +27,11 @@ struct Image {
         cudaFree(raster);
     }
     
-    __host__ __device__ inline void set(int x, int y, const rgb &color) {
+    void resize(int w, int h) {
+        cudaMallocManaged((void**)&raster, w*h*sizeof(rgb));
+    }
+
+    __device__ inline void set(int x, int y, const rgb &color) {
         raster[x * width + y] = color;
     }
 
@@ -39,7 +43,7 @@ struct Image {
         return raster[x * width + y];
     }
 
-    void gammaCorrect(double gamma) {
+    __device__ void gammaCorrect(double gamma) {
         rgb temp;
         double power = 1.0 / gamma;
         for (int i = 0; i < width; ++i) {
@@ -67,5 +71,4 @@ struct Image {
         }
     }
     
-    void readPPM(std::istream &) const;
 };

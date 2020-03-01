@@ -4,13 +4,15 @@
 #include "../math/ray.cuh"
 
 struct Sphere {
+    static constexpr const float eps = 0.000001;
     Vec3 center;
     float radiusSquared;
 
-    Sphere() = default;
-    Sphere(const Vec3& c, float r) : center(c), radiusSquared(r) {}
+    __device__ Sphere() {};
+    __device__ Sphere(const Vec3& c, float r) : center(c), radiusSquared(r) {}
 
-    __device__ bool hit(const Ray& r, float nearest_dist, Hit& rec) const {
+    __device__ 
+    bool hit(const Ray& r, float nearest_dist, Hit& rec) const {
         Vec3 l = center - r.origin;
         float s = l.dot(r.direction);
     
@@ -31,6 +33,7 @@ struct Sphere {
     
         if (t < nearest_dist) {
             rec.dist = t;
+            rec.color = {.2,.2,.8};
             return true;
         }
     

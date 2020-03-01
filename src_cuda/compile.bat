@@ -1,0 +1,1 @@
+nvcc -m64 -gencode arch=compute_52,code=sm_52 main.cu -ccbin="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\bin\Hostx64\x64"

@@ -1,5 +1,0 @@
-add_library(render scene.cuh sphere.cuh triangle.cuh)
-set_target_properties(render PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-set_target_properties(render PROPERTIES LINKER_LANGUAGE CUDA)
-target_include_directories(render PUBLIC ..)
-target_link_libraries(render math)

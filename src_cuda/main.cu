@@ -24,10 +24,12 @@ void check_cuda(cudaError_t result, char const *const func, const char *const fi
 
 __global__ void setup(Scene* scene) {
     scene->init();
-    scene->addTriangle({  0, 500, -1000}, {250, 250, -1000}, {500, 500, -1000}); // top
-    scene->addTriangle({  0, 500, -1000}, {250, 250, -1000}, {0,     0, -1000}); // left
-    scene->addTriangle({500,   0, -1000}, {250, 250, -1000}, {500, 500, -1000}); // right
-    scene->addTriangle({500,   0, -1000}, {250, 250, -1000}, {0,     0, -1000}); // bottom
+    // scene->addTriangle({  0, 500, -1000}, {250, 250, -1000}, {500, 500, -1000}); // top
+    // scene->addTriangle({  0, 500, -1000}, {250, 250, -1000}, {0,     0, -1000}); // left
+    // scene->addTriangle({500,   0, -1000}, {250, 250, -1000}, {500, 500, -1000}); // right
+    // scene->addTriangle({500,   0, -1000}, {250, 250, -1000}, {0,     0, -1000}); // bottom
+    scene->addTriangle({300, 600, -800}, {0, 100, -1000}, {450, 20, -1000});
+    scene->addSphere({250, 250, -1000}, 150*150);
 }
 
 __global__ void render(rgb* fb, int nx, int ny, Scene* scene) {
@@ -93,6 +95,7 @@ int main() {
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaFree(fb));
     cudaDeviceReset();
-
+    
+    std::cerr << "Finished!\n";
     return 0;
 }
