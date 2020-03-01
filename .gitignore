@@ -40,3 +40,4 @@ build
 *.exp
 *.pdb
 *lib
+src_cuda/compile.bat
