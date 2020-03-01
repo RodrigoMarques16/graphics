@@ -9,7 +9,7 @@
 #include "scene.hpp"
 #include <iostream>
 #include <stdio.h>
-
+#include <chrono>
 
 int main() {
 
@@ -27,6 +27,9 @@ int main() {
     // scene.addTriangle(t);
     // scene.addSphere(s);
 
+    std::chrono::time_point<std::chrono::system_clock> start, stop;
+    start = std::chrono::system_clock::now();
+
     for (double i = 0; i < 500; i++) {
         for (double j = 0; j < 500; j++) {
             auto r = Ray{{i, j, 0}, Vec3::back}; // todo: generate ray based on camera
@@ -37,7 +40,10 @@ int main() {
         }
     }
 
-
+    stop = std::chrono::system_clock::now();
+    std::cerr << "took " << std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count()  << " ns, "
+                         << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms, "
+                         << std::chrono::duration_cast<std::chrono::seconds>(stop - start).count()      << " s\n";
     
     img.writePPM(std::cout);
 }

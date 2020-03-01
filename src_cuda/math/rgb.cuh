@@ -3,9 +3,12 @@
 struct rgb {
     double r, g, b;
 
-    __host__ __device__ constexpr rgb operator-() const { return {-r, -g, -b}; }
+    __host__ __device__ rgb() {};
+    __host__ __device__ rgb(double r, double g, double b) : r(r), g(g), b(b) {}
 
-    __host__ __device__ constexpr rgb operator+(const rgb& other) const {
+    __host__ __device__  rgb operator-() const { return {-r, -g, -b}; }
+
+    __host__ __device__  rgb operator+(const rgb& other) const {
         return {r + other.r, g + other.g, b + other.b};
     }
 
@@ -16,7 +19,7 @@ struct rgb {
         return *this;
     }
 
-    __host__ __device__ constexpr rgb operator-(const rgb& other) const {
+    __host__ __device__  rgb operator-(const rgb& other) const {
         return {r - other.r, g - other.g, b - other.b};
     }
 
@@ -27,11 +30,11 @@ struct rgb {
         return *this;
     }
 
-    __host__ __device__ constexpr rgb operator*(double f) const {
+    __host__ __device__  rgb operator*(double f) const {
         return {r * f, g * f, b * f};
     }
 
-    __host__ __device__ constexpr friend rgb operator*(double f, const rgb v) {
+    __host__ __device__  friend rgb operator*(double f, const rgb v) {
         return {v.r * f, v.g * f, v.b * f};
     }
 
@@ -42,7 +45,7 @@ struct rgb {
         return *this;
     }
 
-    __host__ __device__ constexpr rgb operator/(double f) { return {r / f, g / f, b / f}; }
+    __host__ __device__  rgb operator/(double f) { return {r / f, g / f, b / f}; }
 
     __host__ __device__ rgb& operator/=(double f) {
         r /= f;
@@ -51,7 +54,7 @@ struct rgb {
         return *this;
     }
 
-    __host__ __device__ constexpr rgb operator*(const rgb& other) const {
+    __host__ __device__  rgb operator*(const rgb& other) const {
         return {r * other.r, g * other.g, b * other.b};
     }
 

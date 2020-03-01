@@ -35,4 +35,8 @@ build
 *.exe
 *.out
 *.app
-image.ppm
+
+*.ppm
+*.exp
+*.pdb
+*lib

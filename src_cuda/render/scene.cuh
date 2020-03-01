@@ -5,64 +5,73 @@
 #include "triangle.cuh"
 
 struct Scene {
-    static constexpr const double max_render_dist = std::numeric_limits<double>::infinity();
-    static constexpr const double eps = 0.000001;
+    static constexpr const float max_render_dist = std::numeric_limits<float>::infinity();
+    static constexpr const float eps = 0.000001;
 
-    long long num_triangles = 0;
-    Triangle** triangles;
+    int num_triangles = 0;
+    Triangle* triangles;
     
     long long num_spheres = 0;
-    Sphere** spheres;
+    Sphere* spheres;
 
     Scene() {
-        cudaMallocManaged((void**)&triangles, 100 * sizeof(Triangle*));
-        cudaMallocManaged((void**)&spheres, 100 * sizeof(Sphere*));
+        // triangles = (Triangle*) malloc(100 * sizeof(Triangle));
+        // cudaMalloc((void**)&triangles, 100 * sizeof(Triangle));
+        // cudaMalloc((void**)&spheres, 100 * sizeof(Sphere));
     }
 
-    ~Scene() {
-        cudaFree(triangles);
-        cudaFree(spheres);
+    __device__ void init() {
+        triangles = (Triangle*) malloc(100 * sizeof(Triangle));
+    }
+
+    __device__ ~Scene() {
+        free(triangles);
+        // cudaFree(triangles);
+        // cudaFree(spheres);
     }
 
     // void addTriangle(const Triangle& o) {
     //     triangles[num_triangles++] = o;
     // }
 
-    void addTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2) {
-        triangles[num_triangles++] = new Triangle(p0, p1, p2);
+    __device__ void addTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2) {
+        triangles[num_triangles++] = Triangle(p0, p1, p2);
     }
 
     // void addSphere(const Sphere& o) {
     //     spheres[num_spheres++] = o;
     // }
 
-    // void addSphere(const Vec3& center, double radiusSquared) {
-    //     spheres[num_spheres++] = {center, radiusSquared};
-    // }
-
-    __device__ Hit* intersect(const Ray& r) const {
-        Hit* sphereHit   = intersectSpheres(r, max_render_dist);
-        Hit* triangleHit = intersectTriangles(r, sphereHit ? sphereHit->dist 
-                                                           : max_render_dist);
-        return triangleHit ? triangleHit : sphereHit;
+    __device__ void addSphere(const Vec3& center, float radiusSquared) {
+        spheres[num_spheres++] = {center, radiusSquared};
     }
 
-    __device__ Hit* intersectSpheres(const Ray& r, double nearest_dist) const{
+    __device__ bool intersect(const Ray& r, Hit& rec) const {
+        // Hit* sphereHit   = intersectSpheres(r, max_render_dist);
+        // printf("intersects\n");
+        // Hit* triangleHit = intersectTriangles(r, sphereHit != nullptr ? 
+        //                                             sphereHit->dist :
+        //                                             max_render_dist);
+        // return triangleHit ? triangleHit : sphereHit;
+        return intersectTriangles(r, max_render_dist, rec);
+    }
+
+    __device__ Hit* intersectSpheres(const Ray& r, float nearest_dist) const{
         int nearest_index = -1;
     
     //     for (size_t i = 0; i < num_spheres; ++i) {
     //         Vec3 l = spheres[i].center - r.origin;
-    //         double s = l.dot(r.direction);
+    //         float s = l.dot(r.direction);
     
-    //         double lsquared = l.dot(l);
+    //         float lsquared = l.dot(l);
     //         if (s < 0 && lsquared > spheres[i].radiusSquared)
     //             continue;
     
-    //         double msquared = lsquared - s * s;
+    //         float msquared = lsquared - s * s;
     //         if (msquared > spheres[i].radiusSquared)
     //             continue;
     
-    //         double q = sqrt(spheres[i].radiusSquared - msquared);
+    //         float q = sqrt(spheres[i].radiusSquared - msquared);
     //         float t;
     //         if (lsquared > spheres[i].radiusSquared)
     //             t = s - q;
@@ -79,34 +88,33 @@ struct Scene {
     //     // auto norm = (r.origin + nearestDist * r.direction - spheres[neareastIndex].center)
     //     //             .unitVector();
     
-    //     return new Hit{nearest_dist, /*norm,*/ {.2,.2,.8}};
+        return new Hit{nearest_dist, /*norm,*/ {.2,.2,.8}};
     }
 
-    __device__ Hit* intersectTriangles(const Ray& r, double nearest_dist) const{
+    __device__ bool intersectTriangles(const Ray& r, float nearest_dist, Hit& rec) const {
         int nearest_index = -1;
-        double nearest_u, nearest_v;
-    
-        for(size_t i = 0; i < num_triangles; ++i) {
-            Vec3 p0p1 = triangles[i]->p1 - triangles[i]->p0;
-            Vec3 p0p2 = triangles[i]->p2 - triangles[i]->p0;
+        float nearest_u, nearest_v;
+        for(int i = 0; i < num_triangles; ++i) {
+            Vec3 p0p1 = triangles[i].p1 - triangles[i].p0;
+            Vec3 p0p2 = triangles[i].p2 - triangles[i].p0;
             Vec3 pvec = r.direction.cross(p0p2);
-            double det = p0p1.dot(pvec);
+            float det = p0p1.dot(pvec);
     
             if (fabs(det) < eps) continue;
     
-            double invDet = 1 / det;
+            float invDet = 1 / det;
     
-            Vec3 tvec = r.origin - triangles[i]->p0;
+            Vec3 tvec = r.origin - triangles[i].p0;
             
-            double u = tvec.dot(pvec) * invDet;
+            float u = tvec.dot(pvec) * invDet;
             if (u < 0 || u > 1) continue;
     
             Vec3 qvec = tvec.cross(p0p1);
             
-            double v = r.direction.dot(qvec) * invDet;
+            float v = r.direction.dot(qvec) * invDet;
             if (v < 0 || u + v > 1) continue;
     
-            double t = p0p2.dot(qvec) * invDet;
+            float t = p0p2.dot(qvec) * invDet;
     
             if (t < eps || t > nearest_dist) continue;
     
@@ -117,10 +125,12 @@ struct Scene {
                 nearest_v = v;
             }
         }
+
+        if (nearest_index == -1) return false;
     
-        if (nearest_index == -1) return nullptr;
-    
-        return new Hit{nearest_dist,
-                         {nearest_u, nearest_v, 1 - nearest_u - nearest_v}};
+        rec.dist = nearest_dist;
+        rec.color = {nearest_u, nearest_v, 1 - nearest_u - nearest_v};
+
+        return true;
     }
 };

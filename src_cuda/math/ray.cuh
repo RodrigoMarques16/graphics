@@ -14,8 +14,12 @@ struct Ray {
 struct Hit {
     double dist;
     rgb color;
+    __device__ Hit() {};
+    __device__ Hit(double dist, rgb color) : dist(dist), color(color) {}
 };
 
 struct ShadowHit {
     double dist;
+    __device__ ShadowHit() {};
+    __device__ ShadowHit(double dist) : dist(dist) {}
 };
