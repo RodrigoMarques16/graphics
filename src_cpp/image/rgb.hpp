@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iosfwd>
+#include <algorithm>
 
 struct rgb {
     double r, g, b;
