@@ -36,7 +36,6 @@ build
 *.out
 *.app
 
-*.ppm
 *.exp
 *.pdb
 *lib

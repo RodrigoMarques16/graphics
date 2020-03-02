@@ -39,9 +39,9 @@ struct Image {
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 temp = get(i, j);
-                set(i, j, rgb{powf(temp.r, power), 
-                              powf(temp.g, power),
-                              powf(temp.b, power)});
+                set(i, j, rgb{pow(temp.r, power), 
+                              pow(temp.g, power),
+                              pow(temp.b, power)});
             }
         }
     }
